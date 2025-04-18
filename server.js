@@ -90,6 +90,8 @@ app.engine(".hbs", exphbs.engine({
   }
 }));
 app.set("view engine", ".hbs");
+app.set('view engine', 'ejs'); // or 'hbs', 'pug', etc., depending on what you're using
+app.set('views', path.join(__dirname, 'views'));
 
 // Middleware
 app.use(express.static("public"));
