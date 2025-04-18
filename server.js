@@ -90,8 +90,6 @@ app.engine(".hbs", exphbs.engine({
   }
 }));
 app.set("view engine", ".hbs");
-app.set('view engine', 'ejs'); // or 'hbs', 'pug', etc., depending on what you're using
-app.set('views', path.join(__dirname, 'views'));
 
 // Middleware
 app.use(express.static("public"));
@@ -121,6 +119,10 @@ app.use((req, res, next) => {
   app.locals.viewingCategory = req.query.category;
   next();
 });
+
+// Set views directory and view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // Routes
 app.get("/", (req, res) => res.redirect("/shop"));
