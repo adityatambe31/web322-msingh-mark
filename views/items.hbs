@@ -1,0 +1,46 @@
+<h2>Items</h2>
+
+<a href="/Items/add" class="btn btn-success pull-right">Add Item</a>
+
+{{#if successMessage}}
+  <div class="alert alert-success">
+    <strong>Success:</strong> {{successMessage}}
+  </div>
+{{/if}}
+
+{{#if errorMessage}}
+  <div class="alert alert-danger">
+    <strong>Error:</strong> {{errorMessage}}
+  </div>
+{{/if}}
+
+{{#if items}}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Post Date</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Published</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each items}}
+        <tr>
+          <td>{{title}}</td>
+          <td>{{formatDate postDate}}</td>
+          <td>${{price}}</td>
+          <td>{{#if Category}}{{Category.category}}{{else}}Uncategorized{{/if}}</td>
+          <td>{{#if published}}Yes{{else}}No{{/if}}</td>
+          <td>
+            <a href="/Items/delete/{{id}}" class="btn btn-danger">Remove</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <div class="alert alert-warning">No items available. <a href="/Items/add">Add a new item</a> to get started.</div>
+{{/if}}

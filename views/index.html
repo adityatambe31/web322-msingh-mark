@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>eCommerce Store</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <!-- Navigation (No Home) -->
+    <nav>
+        <a href="/shop">Shop</a>
+        <a href="/items">Items</a>
+        <a href="/categories">Categories</a>
+    </nav>
+
+    <!-- Hero Section (No Button) -->
+    <section class="hero">
+        <h1>Welcome to Our Store</h1>
+        <p>Find the best deals on high-quality products.</p>
+    </section>
+
+    <!-- Categories Section -->
+    <div class="content-section">
+        <h2>Categories</h2>
+        <div class="grid-container" id="category-list"></div>
+    </div>
+
+    <!-- Items Section -->
+    <div class="content-section">
+        <h2>Featured Items</h2>
+        <div class="grid-container" id="item-list"></div>
+    </div>
+
+    <script>
+        async function fetchCategories() {
+            try {
+                const res = await fetch('/categories');
+                if (!res.ok) throw new Error("Failed to fetch categories");
+                const categories = await res.json();
+                const categoryList = document.getElementById("category-list");
+
+                categories.forEach(category => {
+                    let div = document.createElement("div");
+                    div.classList.add("card");
+                    div.innerHTML = `<a href="javascript:void(0)" onclick="fetchItems(${category.id})">${category.category}</a>`;
+                    categoryList.appendChild(div);
+                });
+            } catch (error) {
+                console.error("Error loading categories:", error);
+                document.getElementById("category-list").innerHTML = "<p>Error loading categories.</p>";
+            }
+        }
+
+        async function fetchItems(categoryId) {
+            try {
+                const res = await fetch(`/items?category=${categoryId}`);
+                if (!res.ok) throw new Error("Failed to fetch items");
+                const items = await res.json();
+                const itemList = document.getElementById("item-list");
+                itemList.innerHTML = "";
+
+                if (items.length === 0) {
+                    itemList.innerHTML = "<p>No items found in this category.</p>";
+                    return;
+                }
+
+                items.forEach(item => {
+                    if (item.category == categoryId) { // ✅ Filtering by category
+                let div = document.createElement("div");
+                div.classList.add("card");
+                div.innerHTML = `<a href="#">${item.title} - $${item.price}</a>`;
+                itemList.appendChild(div);
+            }
+        });
+            } catch (error) {
+                console.error("Error loading items:", error);
+                document.getElementById("item-list").innerHTML = "<p>Error loading items.</p>";
+            }
+        }
+
+        fetchCategories(); // Load categories on page load
+    </script>
+</body>

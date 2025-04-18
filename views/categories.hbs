@@ -1,0 +1,38 @@
+<h2>Categories</h2>
+
+<a href="/categories/add" class="btn btn-success pull-right">Add Category</a>
+
+{{#if successMessage}}
+  <div class="alert alert-success">
+    <strong>Success:</strong> {{successMessage}}
+  </div>
+{{/if}}
+
+{{#if errorMessage}}
+  <div class="alert alert-danger">
+    <strong>Error:</strong> {{errorMessage}}
+  </div>
+{{/if}}
+
+{{#if categories}}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each categories}}
+        <tr>
+          <td>{{category}}</td>
+          <td>
+            <a href="/categories/delete/{{id}}" class="btn btn-danger">Remove</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <div class="alert alert-warning">No categories found. <a href="/categories/add">Add one now</a>.</div>
+{{/if}}

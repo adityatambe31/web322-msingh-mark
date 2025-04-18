@@ -1,0 +1,452 @@
+<div class="shop-container">
+  <!-- Hero Banner -->
+  <div class="shop-hero mb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h1>Explore Our Collection</h1>
+          <p class="lead">Find the perfect items for your needs from our curated selection</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Navigation -->
+  <div class="category-nav sticky-top mb-4">
+    <div class="container">
+      {{#if data.categories}}
+        <div class="category-scroll">
+          <a href="/shop" class="category-pill {{#unless data.viewingCategory}}active{{/unless}}">
+            <i class="fas fa-th-large me-1"></i> All Items
+          </a>
+          {{#each data.categories}}
+            <a href="/shop?category={{this.id}}" 
+               class="category-pill {{#ifCond ../data.viewingCategory '==' this.id}}active{{/ifCond}}">
+               {{#ifCond this.id "==" 1}}<i class="fas fa-home me-1"></i>{{/ifCond}}
+               {{#ifCond this.id "==" 2}}<i class="fas fa-laptop me-1"></i>{{/ifCond}}
+               {{#ifCond this.id "==" 3}}<i class="fas fa-tshirt me-1"></i>{{/ifCond}}
+               {{#ifCond this.id "==" 4}}<i class="fas fa-volleyball-ball me-1"></i>{{/ifCond}}
+               {{#ifCond this.id "==" 5}}<i class="fas fa-paw me-1"></i>{{/ifCond}}
+               {{this.category}}
+            </a>
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="container">
+    {{#if data.post}}
+      <!-- Single Item View -->
+      <div class="product-detail-wrapper">
+        <nav aria-label="breadcrumb" class="mb-4">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+            {{#each data.categories}}
+              {{#ifCond ../data.post.category "==" this.id}}
+                <li class="breadcrumb-item"><a href="/shop?category={{this.id}}">{{this.category}}</a></li>
+              {{/ifCond}}
+            {{/each}}
+            <li class="breadcrumb-item active">{{data.post.title}}</li>
+          </ol>
+        </nav>
+
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="product-detail-card">
+              <div class="row g-0">
+                <div class="col-md-6">
+                  <div class="product-image-container">
+                    <span class="product-badge">In Stock</span>
+                    <img src="{{data.post.featureImage}}" 
+                         alt="{{data.post.title}}" 
+                         class="product-image" />
+                    <div class="image-gallery mt-3">
+                      <div class="row g-2">
+                        <div class="col-3">
+                          <div class="gallery-thumbnail active">
+                            <img src="{{data.post.featureImage}}" alt="{{data.post.title}}">
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="gallery-thumbnail">
+                            <img src="{{data.post.featureImage}}" alt="{{data.post.title}}">
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="gallery-thumbnail">
+                            <img src="{{data.post.featureImage}}" alt="{{data.post.title}}">
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="gallery-thumbnail">
+                            <img src="{{data.post.featureImage}}" alt="{{data.post.title}}">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="product-info">
+                    <h1 class="product-title">{{data.post.title}}</h1>
+                    <div class="product-rating mb-2">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="far fa-star"></i>
+                      <span class="ms-2 text-muted">(24 reviews)</span>
+                    </div>
+                    
+                    <div class="price-tag mb-4">${{data.post.price}}</div>
+                    
+                    <div class="product-meta mb-4">
+                      <div class="badge bg-primary mb-2">
+                        {{#each data.categories}}
+                          {{#ifCond ../data.post.category "==" this.id}}
+                            {{this.category}}
+                          {{/ifCond}}
+                        {{/each}}
+                      </div>
+                      <div class="post-date small text-muted">
+                        <i class="far fa-calendar-alt me-1"></i>
+                        Added on {{formatDate data.post.postDate}}
+                      </div>
+                    </div>
+
+                    <div class="product-description mb-4">
+                      {{#safeHTML data.post.body}}{{/safeHTML}}
+                    </div>
+                    
+                    <div class="product-quantity mb-4">
+                      <label class="form-label">Quantity</label>
+                      <div class="input-group quantity-selector">
+                        <button class="btn btn-outline-secondary" type="button">−</button>
+                        <input type="text" class="form-control text-center" value="1">
+                        <button class="btn btn-outline-secondary" type="button">+</button>
+                      </div>
+                    </div>
+
+                    <div class="product-actions">
+                      <button class="btn btn-primary btn-lg w-100 mb-3">
+                        <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                      </button>
+                      <div class="row g-2">
+                        <div class="col-6">
+                          <button class="btn btn-outline-primary w-100">
+                            <i class="far fa-heart me-2"></i>Save
+                          </button>
+                        </div>
+                        <div class="col-6">
+                          <button class="btn btn-outline-primary w-100">
+                            <i class="fas fa-share-alt me-2"></i>Share
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Product Tabs -->
+            <div class="product-tabs mt-5">
+              <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab">Description</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab">Specifications</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab">Reviews</button>
+                </li>
+              </ul>
+              <div class="tab-content p-4 bg-white border border-top-0 rounded-bottom" id="productTabsContent">
+                <div class="tab-pane fade show active" id="description" role="tabpanel">
+                  <p>{{data.post.body}}</p>
+                </div>
+                <div class="tab-pane fade" id="specifications" role="tabpanel">
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr>
+                        <th scope="row">Brand</th>
+                        <td>Premium Brand</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Weight</th>
+                        <td>1.5 kg</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dimensions</th>
+                        <td>30 x 20 x 10 cm</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Material</th>
+                        <td>High-quality materials</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                  <div class="reviews-summary mb-4">
+                    <div class="row align-items-center">
+                      <div class="col-md-3 text-center">
+                        <h1 class="display-4">4.2</h1>
+                        <div class="mb-2">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="far fa-star"></i>
+                        </div>
+                        <p class="text-muted">Based on 24 reviews</p>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="rating-bars">
+                          <div class="rating-bar-item">
+                            <div class="d-flex align-items-center">
+                              <span class="me-2">5</span>
+                              <i class="fas fa-star me-2"></i>
+                              <div class="progress flex-grow-1">
+                                <div class="progress-bar bg-success" style="width: 70%"></div>
+                              </div>
+                              <span class="ms-2">70%</span>
+                            </div>
+                          </div>
+                          <div class="rating-bar-item">
+                            <div class="d-flex align-items-center">
+                              <span class="me-2">4</span>
+                              <i class="fas fa-star me-2"></i>
+                              <div class="progress flex-grow-1">
+                                <div class="progress-bar bg-success" style="width: 20%"></div>
+                              </div>
+                              <span class="ms-2">20%</span>
+                            </div>
+                          </div>
+                          <div class="rating-bar-item">
+                            <div class="d-flex align-items-center">
+                              <span class="me-2">3</span>
+                              <i class="fas fa-star me-2"></i>
+                              <div class="progress flex-grow-1">
+                                <div class="progress-bar bg-warning" style="width: 5%"></div>
+                              </div>
+                              <span class="ms-2">5%</span>
+                            </div>
+                          </div>
+                          <div class="rating-bar-item">
+                            <div class="d-flex align-items-center">
+                              <span class="me-2">2</span>
+                              <i class="fas fa-star me-2"></i>
+                              <div class="progress flex-grow-1">
+                                <div class="progress-bar bg-danger" style="width: 3%"></div>
+                              </div>
+                              <span class="ms-2">3%</span>
+                            </div>
+                          </div>
+                          <div class="rating-bar-item">
+                            <div class="d-flex align-items-center">
+                              <span class="me-2">1</span>
+                              <i class="fas fa-star me-2"></i>
+                              <div class="progress flex-grow-1">
+                                <div class="progress-bar bg-danger" style="width: 2%"></div>
+                              </div>
+                              <span class="ms-2">2%</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-4">
+            <!-- Sidebar Section -->
+            <aside>
+              {{#if data.posts}}
+                <div class="sidebar-card mb-4">
+                  <h4 class="sidebar-title">Similar Items</h4>
+                  <div class="similar-items">
+                    {{#each data.posts}}
+                      <a href="/shop/{{this.id}}?category={{../data.viewingCategory}}" 
+                         class="similar-item">
+                        <div class="similar-item-image">
+                          <img src="{{this.featureImage}}" alt="{{this.title}}">
+                        </div>
+                        <div class="similar-item-info">
+                          <h5>{{this.title}}</h5>
+                          <span class="price">${{this.price}}</span>
+                        </div>
+                      </a>
+                    {{/each}}
+                  </div>
+                </div>
+              {{/if}}
+              
+              <!-- Delivery Information -->
+              <div class="sidebar-card mb-4">
+                <h4 class="sidebar-title">Delivery Information</h4>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex">
+                    <i class="fas fa-truck text-primary me-3 mt-1"></i>
+                    <div>
+                      <strong>Free shipping</strong>
+                      <p class="mb-0 text-muted small">For orders over $50</p>
+                    </div>
+                  </li>
+                  <li class="list-group-item d-flex">
+                    <i class="fas fa-exchange-alt text-primary me-3 mt-1"></i>
+                    <div>
+                      <strong>30-day returns</strong>
+                      <p class="mb-0 text-muted small">No questions asked</p>
+                    </div>
+                  </li>
+                  <li class="list-group-item d-flex">
+                    <i class="fas fa-shield-alt text-primary me-3 mt-1"></i>
+                    <div>
+                      <strong>2-year warranty</strong>
+                      <p class="mb-0 text-muted small">Full coverage</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              
+              <!-- Customer Support -->
+              <div class="sidebar-card">
+                <h4 class="sidebar-title">Need Help?</h4>
+                <p>Our customer support team is here to answer your questions.</p>
+                <a href="/contact" class="btn btn-outline-primary w-100">
+                  <i class="fas fa-headset me-2"></i>Contact Support
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+    {{else if data.items}}
+      <!-- Items Grid View -->
+      <div class="shop-header mb-4">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h2 class="mb-0">
+              {{#if data.viewingCategory}}
+                {{#each data.categories}}
+                  {{#ifCond ../data.viewingCategory "==" this.id}}
+                    {{this.category}}
+                  {{/ifCond}}
+                {{/each}}
+              {{else}}
+                All Products
+              {{/if}}
+            </h2>
+            <p class="text-muted">Showing {{data.items.length}} items</p>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex justify-content-md-end">
+              <div class="input-group shop-search">
+                <input type="text" class="form-control" placeholder="Search products...">
+                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+              </div>
+              <div class="dropdown ms-2 d-none d-md-block">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown">
+                  Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                  <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                  <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                  <li><a class="dropdown-item" href="#">Newest First</a></li>
+                  <li><a class="dropdown-item" href="#">Best Selling</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        {{#each data.items}}
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 product-card">
+              <div class="card-badges">
+                {{#if this.isNew}}
+                  <span class="badge bg-success">New</span>
+                {{/if}}
+                {{#if this.sale}}
+                  <span class="badge bg-danger">Sale</span>
+                {{/if}}
+              </div>
+              <div class="card-img-container">
+                <img src="{{this.featureImage}}" class="card-img-top" alt="{{this.title}}">
+                <div class="card-img-overlay d-flex justify-content-end align-items-start">
+                  <button class="btn btn-sm btn-light rounded-circle product-card-wishlist">
+                    <i class="far fa-heart"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="product-category text-muted small mb-1">
+                  {{#each ../data.categories}}
+                    {{#ifCond ../../this.category "==" this.id}}
+                      {{this.category}}
+                    {{/ifCond}}
+                  {{/each}}
+                </div>
+                <h5 class="card-title product-title">{{this.title}}</h5>
+                <div class="product-rating small mb-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                  <span class="text-muted ms-1">(4.0)</span>
+                </div>
+                <p class="card-text price">${{this.price}}</p>
+              </div>
+              <div class="card-footer bg-white pt-0 border-top-0">
+                <div class="d-grid gap-2">
+                  <a href="/shop/{{this.id}}?category={{../data.viewingCategory}}" class="btn btn-outline-primary">
+                    View Details
+                  </a>
+                  <button class="btn btn-primary">
+                    <i class="fas fa-cart-plus me-1"></i> Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+      <!-- Pagination -->
+      <nav class="d-flex justify-content-center mt-5">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    {{else}}
+      <div class="empty-state">
+        <img src="/images/empty-state.svg" alt="No items found" class="empty-state-image">
+        <h2>No items found</h2>
+        <p class="text-muted">We couldn't find any items matching your criteria.</p>
+        <a href="/shop" class="btn btn-primary">Browse All Items</a>
+      </div>
+    {{/if}}
+  </div>
+</div>
